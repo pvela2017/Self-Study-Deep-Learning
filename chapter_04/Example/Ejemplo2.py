@@ -113,19 +113,16 @@ model.summary()
 
 
 # TRAINING 
-batch_size = 128
-epochs = 125
+batch_size = 64
+epochs = 100
 checkpointer = ModelCheckpoint(filepath='model.100epochs.hdf5', verbose=1, save_best_only=True )
 optimizer = keras.optimizers.Adam(lr=0.0001,decay=1e-6)
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
-history = model.fit_generator(datagen.flow(x_train, y_train, batch_size=batch_size), 
+history = model.fit(datagen.flow(x_train, y_train, batch_size=batch_size), 
                               callbacks=[checkpointer], steps_per_epoch=x_train.shape[0] // batch_size,
                               epochs=epochs, verbose=2, validation_data=(x_valid, y_valid))
 
-
-# Load model for tests
-model.load_weights('model.100epochs.hdf5')
 
 
 # MODEL EVALUATION
