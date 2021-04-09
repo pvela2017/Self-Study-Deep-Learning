@@ -124,12 +124,16 @@ history = model.fit_generator(datagen.flow(x_train, y_train, batch_size=batch_si
                               epochs=epochs, verbose=2, validation_data=(x_valid, y_valid))
 
 
+# Load model for tests
+model.load_weights('model.100epochs.hdf5')
+
+
 # MODEL EVALUATION
 scores = model.evaluate(x_test, y_test, batch_size=128, verbose=1)
 print('\nTest result: %.3f loss: %.3f' % (scores[1]*100,scores[0]))
 
-pyplot.plot(history.history['acc'], label='train')
-pyplot.plot(history.history['val_acc'], label='test')
+pyplot.plot(history.history['accuracy'], label='train')
+pyplot.plot(history.history['val_accuracy'], label='test')
 pyplot.legend()
 pyplot.show()
 
